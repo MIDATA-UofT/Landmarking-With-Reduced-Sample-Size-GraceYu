@@ -10,5 +10,5 @@ The summary tables and figures can be found in file final_report_figures.xlsx.
 ## Images
 Images were collected from MiDATA Lab. Visualization of predictions on images can be found in directory "visualization".
 
-## LICENSE
+## License
 Codes from Unbiased-Teacher is used under MIT license, and codes from YOLOv5 is under GNU general public license, pleaase check LICENSE for details.
