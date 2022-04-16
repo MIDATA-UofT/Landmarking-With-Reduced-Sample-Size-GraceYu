@@ -1,0 +1,409 @@
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r, message=FALSE}
+library(tidyverse)
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+### 10%
+```{r, fig.height=2}
+validation <- read_csv("./10%/IoU.csv")
+glimpse(validation)
+
+# Summary table
+validation %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(validation %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- validation %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+### 5%
+```{r, fig.height=2}
+validation <- read_csv("./5%/IoU.csv")
+glimpse(validation)
+
+# Summary table
+validation %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(validation %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- validation %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+### 2%
+```{r, fig.height=2}
+validation <- read_csv("./2%/IoU.csv")
+glimpse(validation)
+
+# Summary table
+validation %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(validation %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- validation %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+### 1%
+```{r, fig.height=2}
+validation <- read_csv("./1%/IoU.csv")
+glimpse(validation)
+
+# Summary table
+validation %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(validation %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- validation %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+
+## Score
+### 10%
+```{r, fig.height=2}
+score <- read_csv("./10%/score.csv")
+glimpse(score)
+
+# Summary table
+score %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(score %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- score %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+### 5%
+```{r, fig.height=2}
+score <- read_csv("./5%/score.csv")
+glimpse(score)
+
+# Summary table
+score %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(score %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- score %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+### 2%
+```{r, fig.height=2}
+score <- read_csv("./2%/score.csv")
+glimpse(score)
+
+# Summary table
+score %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(score %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- score %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+### 1%
+```{r, fig.height=2}
+score <- read_csv("./1%/score.csv")
+glimpse(score)
+
+# Summary table
+score %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(score %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- score %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+
+```
+
+
+
+## Yolo
+### IoU
+```{r, fig.height=2}
+validation <- read_csv("./yolo/IoU.csv")
+glimpse(validation)
+
+# Summary table
+validation %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(validation %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- validation %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+```
+
+
+### Confidence Score
+```{r, fig.height=2}
+score <- read_csv("./yolo/score.csv")
+glimpse(score)
+
+# Summary table
+score %>%
+  dplyr::select(Femur, Patella, QT)%>%
+  summarize(n=n(), 
+            value = c("mean", "median"),
+            Femur = c(round(mean(Femur, na.rm=TRUE),2), round(median(Femur, na.rm=TRUE),2)),
+            Patella = c(round(mean(Patella, na.rm=TRUE),2), round(median(Patella, na.rm=TRUE),2)),
+            QT = c(round(mean(QT, na.rm=TRUE),2), round(median(QT, na.rm=TRUE),2)))
+```
+
+
+Use R to find a 95% bootstrap confidence interval for the *mean*.  Use 1000 bootstrap samples. *NOTE:* More bootstrap samples is better, but if you find this times out or takes too long in RStudio Cloud, try using 1000 bootstrap samples instead.
+
+```{r}
+repetitions <- 1000
+Femur_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+Patella_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+QT_means <- rep(NA, repetitions)  # where we'll store the bootstrap means
+sample_size <- as.numeric(score %>% summarize(n()))
+set.seed(50)
+for (i in 1:repetitions)
+{
+  boot_samp <- score %>% sample_n(size = sample_size, replace=TRUE)
+  Femur_means[i] <- as.numeric(boot_samp %>% summarize(mean(Femur, na.rm=TRUE)))
+  Patella_means[i] <- as.numeric(boot_samp %>% summarize(mean(Patella, na.rm=TRUE)))
+  QT_means[i] <- as.numeric(boot_samp %>% summarize(mean(QT,na.rm=TRUE)))
+}
+round(quantile(Femur_means,c(0.025,0.975)),2)
+round(quantile(Patella_means,c(0.025,0.975)),2)
+round(quantile(QT_means,c(0.025,0.975)),2)
+
+
+```
